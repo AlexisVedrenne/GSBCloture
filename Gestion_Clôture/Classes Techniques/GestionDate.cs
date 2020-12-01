@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Classe.Technique
 {
+    /// <summary>
+    /// Classe qui permet de gérer les dates
+    /// </summary>
     abstract class GestionDate
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace Classe.Technique
         /// <returns>Retourne le mois precedent cette date</returns>
         public static string getMoisPrecedent(DateTime date)
         {
-            if ((date.Month - 1) < 10)
+            if ((date.Month - 1) < 10 && (date.Month-1)>0)
             {
                 return "0" + (date.Month - 1).ToString();
             }
@@ -71,7 +74,7 @@ namespace Classe.Technique
         /// <param name="numJour1">L numéro du jour</param>
         /// <param name="numJour2">Le numéro du jour</param>
         /// <param name="date">La date</param>
-        /// <returns>Retourne vrai si la date est dans l'interval</returns>
+        /// <returns>Retourne vrai si la date est dans l'intervalle</returns>
         public static bool Entre(int numJour1, int numJour2, DateTime date)
         {
             try
@@ -94,6 +97,12 @@ namespace Classe.Technique
                 throw new Exception("Erreur : " + ex.Message);
             }
         }
+        /// <summary>
+        /// Fonction qui permet de savoir si la date courrante est dans un intervalle donné
+        /// </summary>
+        /// <param name="numJour1">La première date passer en parametre</param>
+        /// <param name="numJour2">La deuxième date passer en parametre</param>
+        /// <returns>Retourne vrai si la date courrante est dans l'intervalle</returns>
         public static bool Entre(int numJour1,int numJour2)
         {
            return Entre(numJour1, numJour2, DateTime.Now);

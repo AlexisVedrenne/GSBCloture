@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using test.unit.testDate;
 
 namespace Gestion_Clôture
 {
@@ -11,21 +13,24 @@ namespace Gestion_Clôture
     {
         static void Main()
         {
-            //BddMySql.GetInstance();
-            //int nb = BddMySql.ClotureFraisDuMois("202011");
-            //Console.WriteLine(nb);
-            DateTime d1 = new DateTime(1991, 10, 12);
-            DateTime d2 = new DateTime(1991, 11, 9);
-            DateTime d3 = new DateTime(2001, 1, 5);
-            Console.WriteLine("Mois precedent : "+GestionDate.getMoisPrecedent());
-            Console.WriteLine("Mois suivant : "+GestionDate.getMoisSuivant());
-            Console.WriteLine("Mois precedent param : "+GestionDate.getMoisPrecedent(d1));
-            Console.WriteLine("Mois suivant param : " + GestionDate.getMoisSuivant(d2));
-            Console.WriteLine("Entre vrai : "+GestionDate.Entre(25,20));
-            Console.WriteLine("Entre faux : "+GestionDate.Entre(2,10));
-            Console.WriteLine("Entre param vrai : " + GestionDate.Entre(1,6 ,d3));
-            Console.WriteLine("Entre param faux : " + GestionDate.Entre(20, 30,d3));
-            Console.ReadLine();
+
+            if (testDate.dateGoTests() == 0)
+            {
+                if (GestionDate.Entre(1, 10))
+                {
+                    BddMySql.bddMySql = BddMySql.GetInstance();
+                    BddMySql.ClotureFraisDuMois(GestionDate.getMoisPrecedent());
+                    Console.ReadKey();
+                }
+                else if (DateTime.Now.Day == 20)
+                {
+                    BddMySql.bddMySql = BddMySql.GetInstance();
+                    BddMySql.MajFicheValidéeToRb(GestionDate.getMoisPrecedent());
+                    Console.ReadKey();
+                }
+            }
+           
         }
+   
     }
 }

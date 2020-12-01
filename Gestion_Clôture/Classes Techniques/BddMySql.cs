@@ -73,11 +73,16 @@ namespace Classe.Technique
             }
         }
 
-
+        /// <summary>
+        /// Fonction publique qui permet de cloturer les fiches de frais du mois
+        /// </summary>
+        /// <param name="dateCloture">La data de cloture à passer en parametre</param>
+        /// <returns>Retourne le nombre de ligne qui on était affectées</returns>
         public static int ClotureFraisDuMois(string dateCloture)
         {
             try
             {
+                dateCloture=DateTime.Now.Year.ToString()+dateCloture;
                 BddMySql.Open();
                 BddMySql.tranSql = BddMySql.cnMySql.BeginTransaction();
                 string rqt = @"update fichefrais set idetat = 'CL' where mois= @mois";
@@ -96,5 +101,38 @@ namespace Classe.Technique
                 BddMySql.Fermer();
             }
         }
+
+        /// <summary>
+        /// Fonction qui permet de mettre à jour les fiches valider à l'était remboursé
+        /// </summary>
+        /// <param name="dateCloture"></param>
+        /// <returns></returns>
+        public static int MajFicheValidéeToRb(string dateCloture)
+        {
+            try
+            {
+                dateCloture = DateTime.Now.Year.ToString() + dateCloture;
+                BddMySql.Open();
+                BddMySql.tranSql = BddMySql.cnMySql.BeginTransaction();
+                string rqt = @"update fichefrais set idetat = 'RB' where mois= @mois and idetat= @idEtat";
+                BddMySql.cmdMySql = new MySqlCommand(rqt, BddMySql.cnMySql);
+                BddMySql.cmdMySql.Parameters.AddWithValue("@mois", dateCloture);
+                BddMySql.cmdMySql.Parameters.AddWithValue("@idEtat", "CL");
+                return BddMySql.cmdMySql.ExecuteNonQuery();
+            }
+            catch (MySqlException moe)
+            {
+                BddMySql.tranSql.Rollback();
+                throw new Exception("Impossible de mettre à jour les fiches de frais : " + moe.Message);
+            }
+            finally
+            {
+                BddMySql.tranSql.Commit();
+                BddMySql.Fermer();
+            }
+        }
+        
+
+        
     }
 }
