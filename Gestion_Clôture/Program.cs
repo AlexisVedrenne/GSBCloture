@@ -13,20 +13,18 @@ namespace Gestion_Clôture
     {
         static void Main()
         {
-
+            
             if (testDate.dateGoTests() == 0)
             {
                 if (GestionDate.Entre(1, 10))
                 {
                     BddMySql.bddMySql = BddMySql.GetInstance();
-                    BddMySql.ClotureFraisDuMois(GestionDate.getMoisPrecedent());
-                    Console.ReadKey();
+                    BddMySql.ClotureFraisDuMois(GestionDate.getMoisPrecedent());                 
                 }
                 else if (DateTime.Now.Day == 20)
                 {
                     BddMySql.bddMySql = BddMySql.GetInstance();
-                    BddMySql.MajFicheValidéeToRb(GestionDate.getMoisPrecedent());
-                    Console.ReadKey();
+                    BddMySql.MajFicheValidéeToRb(GestionDate.getMoisPrecedent());                    
                 }
             }
            
