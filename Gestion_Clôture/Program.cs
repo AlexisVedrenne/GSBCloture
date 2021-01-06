@@ -6,11 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using test.unit.testDate;
+using System.Runtime.InteropServices;
+using System.IO;
 
 namespace Gestion_Clôture
 {
     class Program
     {
+        
         static void Main()
         {
             
@@ -27,8 +30,9 @@ namespace Gestion_Clôture
                     BddMySql.MajFicheValidéeToRb(GestionDate.getMoisPrecedent());                    
                 }
             }
-           
+            
         }
    
+
     }
 }
